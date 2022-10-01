@@ -1,22 +1,24 @@
 import React from 'react';
 import "./login.scss";
 import {Formik} from "formik";
-import {connect} from "formik";
-import {login} from '../../redux/action/loginAction'
+import {connect} from "react-redux";
+import {login} from '../../redux/actions/loginAction';
+import { useNavigate } from  "react-router-dom";
 
 const Login = (props) => {
+    const navigate = useNavigate();
     return (
         <div className="container">
-            <div className="row vh-100 justify-content-center align-items-center" >
+            <div className="row vh-100 justify-content-center align-items-center">
                 <div className="card">
                     <div className="card-header">
-                        <h3 className="text-center"> Admin </h3>
+                        <h3 className="text-center">Admin</h3>
                     </div>
                     <div className="card-body">
                         <Formik
                             initialValues={{ username: '', password: '' }}
                             onSubmit={(values ) => {
-                                props.login(values);
+                                props.login(values, navigate);
                             }}
                         >
                             {({
@@ -29,8 +31,8 @@ const Login = (props) => {
                                     <input
                                         type="text"
                                         name="username"
-                                        className="form-control "
-                                        placeholder="UserName"
+                                        className="form-control"
+                                        placeholder="Username"
                                         onChange={handleChange}
                                         value={values.username}
                                     />
@@ -45,8 +47,8 @@ const Login = (props) => {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="btn btn-success mt-3 ">
-                                        Submit
+                                        className="btn btn-success
+                                        btn-block mt-3">Sing in
                                     </button>
                                 </form>
                             )}
@@ -57,5 +59,7 @@ const Login = (props) => {
         </div>
     );
 };
+
+
 
 export default connect(null, {login})(Login);
